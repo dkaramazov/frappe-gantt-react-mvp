@@ -47,16 +47,18 @@ function App() {
   const [mode, setMode] = useState(() => ViewMode.Day);
 
   function handleTaskSubmitted(newTask) {
-    console.log("task submitted", newTask);
     let found = tasks.find((t) => t.id === newTask.id);
     if (found) {
       found = {
         ...found,
         ...newTask,
       };
-      setTasks([...tasks]);
+      const other = tasks.filter((t) => t.id !== found.id);
+      setTasks([...other, found].sort((a, b) => a._index - b._index));
+      console.log("updated task", newTask);
     } else {
       setTasks([...tasks, newTask]);
+      console.log("added task");
     }
   }
 

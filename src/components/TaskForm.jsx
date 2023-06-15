@@ -96,13 +96,15 @@ const TaskForm = ({ onTaskSubmitted, selectedTask, tasks }) => {
           multiple
           name="dependencies"
         >
-          {tasks.map((t) => {
-            return (
-              <option key={t.id} value={t.id}>
-                {t.id}
-              </option>
-            );
-          })}
+          {tasks
+            .filter((t) => t.id !== tempTask.id)
+            .map((t) => {
+              return (
+                <option key={t.id} value={t.id}>
+                  {t.id}
+                </option>
+              );
+            })}
         </select>
       </div>
       <button onClick={() => handleClearForm()} type="button">
