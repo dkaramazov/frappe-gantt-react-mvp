@@ -1,6 +1,6 @@
 import moment from "moment";
 
-const TaskList = ({ tasks }) => {
+const TaskList = ({ tasks, onDeleteTask }) => {
   return (
     <table style={{ width: "100%" }}>
       <thead style={{ color: "green" }}>
@@ -26,6 +26,11 @@ const TaskList = ({ tasks }) => {
             <td>{new moment(t._start).format("YYYY-MM-DD")}</td>
             <td>{new moment(t._end).format("YYYY-MM-DD")}</td>
             <td>{t._index}</td>
+            <td>
+              <button onClick={() => onDeleteTask(t.id)} type="button">
+                Delete
+              </button>
+            </td>
           </tr>
         ))}
       </tbody>

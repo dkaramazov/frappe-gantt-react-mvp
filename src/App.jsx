@@ -71,11 +71,14 @@ function App() {
     setSelectedTask(task);
   }
 
+  function handleDeleteTask(id) {
+    setTasks(tasks.filter((t) => t.id !== id));
+  }
+
   function handleUpdateDate(updatedTask, start, end) {
     const task = tasks.find((t) => updatedTask.id === t.id);
     task.start = new moment(start).format("YYYY-MM-DD");
     task.end = new moment(end).format("YYYY-MM-DD");
-    console.log("date updated", updatedTask.id);
   }
 
   function handleUpdateProgress(updatedTask, progress) {
@@ -103,7 +106,7 @@ function App() {
         />
       </div>
       <div>
-        <TaskList tasks={tasks} />
+        <TaskList tasks={tasks} onDeleteTask={handleDeleteTask} />
       </div>
       <div>
         <FrappeGantt
