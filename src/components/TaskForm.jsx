@@ -110,7 +110,13 @@ const TaskForm = ({ onTaskSubmitted, selectedTask, tasks }) => {
       <button onClick={() => handleClearForm()} type="button">
         Clear Form
       </button>
-      <button onClick={() => onTaskSubmitted(tempTask)} type="button">
+      <button
+        onClick={() => {
+          handleClearForm();
+          onTaskSubmitted(tempTask);
+        }}
+        type="button"
+      >
         {selectedTask ? "Update" : "Create"} Task
       </button>
       <button
