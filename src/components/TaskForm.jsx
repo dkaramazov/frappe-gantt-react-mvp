@@ -33,7 +33,15 @@ const TaskForm = ({ onTaskSubmitted, selectedTask, tasks }) => {
   }
 
   return (
-    <form style={{ display: "flex" }}>
+    <form
+      style={{
+        border: "3px solid gray",
+        padding: "10px",
+
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
       <div>
         <div className="flex">
           <label htmlFor="id">ID:</label>

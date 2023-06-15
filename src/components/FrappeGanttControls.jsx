@@ -11,7 +11,9 @@ const FrappeGanttControls = ({ onModeChanged, defaultMode, ViewMode }) => {
   return (
     <form
       style={{
-        border: "3px solid green",
+        border: "3px solid gray",
+        padding: "10px",
+        marginRight: "10px",
         display: "flex",
         alignItems: "center",
       }}
