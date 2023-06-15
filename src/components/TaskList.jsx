@@ -2,7 +2,7 @@ import moment from "moment";
 
 const TaskList = ({ tasks }) => {
   return (
-    <table>
+    <table style={{ width: "100%" }}>
       <thead style={{ color: "green" }}>
         <tr>
           <th>ID</th>

@@ -19,7 +19,7 @@ const taskList = [
     id: "Task 2",
     name: "Create Home Page",
     start: "2023-06-28",
-    end: "2023-06-31",
+    end: "2023-06-30",
     progress: 20,
     dependencies: "Task 1",
   },
@@ -27,7 +27,7 @@ const taskList = [
     id: "Task 3",
     name: "Create About Page",
     start: "2023-06-28",
-    end: "2023-06-31",
+    end: "2023-06-30",
     progress: 0,
     dependencies: "Task 2, Task 1",
   },
@@ -54,6 +54,7 @@ function App() {
         ...found,
         ...newTask,
       };
+      setTasks([...tasks]);
     } else {
       setTasks([...tasks, newTask]);
     }
@@ -81,7 +82,7 @@ function App() {
   }
 
   function handleUpdateTasks(tasks) {
-    setTasks(tasks);
+    setTasks([...tasks]);
     console.log("tasks updated", tasks);
   }
 
