@@ -1,14 +1,6 @@
 import { useEffect, useRef } from "react";
 import Gantt from "frappe-gantt";
 
-const ViewMode = {
-  QuarterDay: "Quarter Day",
-  HalfDay: "Half Day",
-  Day: "Day",
-  Week: "Week",
-  Month: "Month",
-};
-
 const FrappeGantt = ({
   tasks,
   viewMode,
@@ -25,8 +17,7 @@ const FrappeGantt = ({
   useEffect(() => {
     if (_gantt.current) {
       _gantt.current.refresh(tasks);
-      console.log("task list updated!!!");
-      _gantt.current.change_view_mode(ViewMode[viewMode]);
+      _gantt.current.change_view_mode(viewMode);
     }
   }, [_gantt, tasks, viewMode]);
 

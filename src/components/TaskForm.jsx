@@ -1,14 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const TaskForm = ({ onTaskSubmitted, tasks }) => {
-  const [tempTask, setTempTask] = useState({
-    id: "",
-    name: "",
-    start: null,
-    end: null,
-    progress: 0,
-    dependencies: "",
+const emptyTask = {
+  id: "",
+  name: "",
+  start: "",
+  end: "",
+  progress: 0,
+  dependencies: "",
+};
+
+const TaskForm = ({ onTaskSubmitted, selectedTask, tasks }) => {
+  const [tempTask, setTempTask] = useState(() => {
+    return { ...selectedTask } || emptyTask;
   });
+
+  useEffect(() => {
+    if (selectedTask) {
+      setTempTask(selectedTask);
+    }
+    console.log("selected task updated");
+  }, [selectedTask]);
 
   function onTaskUpdated(name, value) {
     setTempTask({
@@ -17,41 +28,56 @@ const TaskForm = ({ onTaskSubmitted, tasks }) => {
     });
   }
 
+  function handleClearForm() {
+    setTempTask(emptyTask);
+  }
+
   return (
     <form style={{ display: "flex" }}>
-      <div className="input-item">
-        <label htmlFor="id">ID:</label>
-        <input
-          onChange={(e) => onTaskUpdated("id", e.target.value)}
-          type="text"
-          name="id"
-        />
+      <div>
+        <div className="flex">
+          <label htmlFor="id">ID:</label>
+          <input
+            value={tempTask.id}
+            onChange={(e) => onTaskUpdated("id", e.target.value)}
+            type="text"
+            name="id"
+          />
+        </div>
+        <div className="flex">
+          <label htmlFor="name">Name:</label>
+          <input
+            value={tempTask.name}
+            onChange={(e) => onTaskUpdated("name", e.target.value)}
+            type="text"
+            name="name"
+          />
+        </div>
       </div>
-      <div className="input-item">
-        <label htmlFor="name">Name:</label>
-        <input
-          onChange={(e) => onTaskUpdated("name", e.target.value)}
-          type="text"
-          name="name"
-        />
-      </div>
-      <div style={{ alignContent: "flex-start" }}>
-        <label htmlFor="start">Start Date:</label>
-        <input
-          onChange={(e) => onTaskUpdated("start", e.target.value)}
-          type="date"
-          name="start"
-        />
-        <label htmlFor="end">End Date:</label>
-        <input
-          onChange={(e) => onTaskUpdated("end", e.target.value)}
-          type="date"
-          name="end"
-        />
+      <div>
+        <div className="flex">
+          <label htmlFor="start">Start:</label>
+          <input
+            value={tempTask.start}
+            onChange={(e) => onTaskUpdated("start", e.target.value)}
+            type="date"
+            name="start"
+          />
+        </div>
+        <div className="flex">
+          <label htmlFor="end">End:</label>
+          <input
+            value={tempTask.end}
+            onChange={(e) => onTaskUpdated("end", e.target.value)}
+            type="date"
+            name="end"
+          />
+        </div>
       </div>
       <div>
         <label htmlFor="progress">Progress:</label>
         <input
+          value={tempTask.progress}
           onChange={(e) => onTaskUpdated("progress", Number(e.target.value))}
           type="number"
           name="progress"
@@ -60,6 +86,7 @@ const TaskForm = ({ onTaskSubmitted, tasks }) => {
       <div>
         <label htmlFor="dependencies">Dependencies:</label>
         <select
+          value={tempTask.dependencies}
           onChange={(e) => {
             onTaskUpdated(
               "dependencies",
@@ -78,16 +105,19 @@ const TaskForm = ({ onTaskSubmitted, tasks }) => {
           })}
         </select>
       </div>
+      <button onClick={() => handleClearForm()} type="button">
+        Clear Form
+      </button>
       <button onClick={() => onTaskSubmitted(tempTask)} type="button">
-        Create Task
+        {selectedTask ? "Update" : "Create"} Task
       </button>
       <button
         onClick={() =>
           onTaskSubmitted({
             id: "Task RANDOM",
             name: "RANDOM TASK",
-            start: "2023-6-13",
-            end: "2023-6-31",
+            start: "2023-06-13",
+            end: "2023-06-31",
             progress: 67,
             dependencies: "Task 3",
           })
