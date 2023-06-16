@@ -6,19 +6,14 @@ const emptyTask = {
   start: "",
   end: "",
   progress: 0,
-  dependencies: "",
+  dependencies: [],
 };
 
 const TaskForm = ({ onTaskSubmitted, selectedTask, tasks }) => {
-  const [tempTask, setTempTask] = useState(() => {
-    return { ...selectedTask } || emptyTask;
-  });
+  const [tempTask, setTempTask] = useState(() => emptyTask);
 
   useEffect(() => {
-    if (selectedTask) {
-      setTempTask(selectedTask);
-    }
-    console.log("selected task updated");
+    setTempTask(selectedTask || emptyTask);
   }, [selectedTask]);
 
   function onTaskUpdated(name, value) {
@@ -37,7 +32,6 @@ const TaskForm = ({ onTaskSubmitted, selectedTask, tasks }) => {
       style={{
         border: "3px solid gray",
         padding: "10px",
-
         display: "flex",
         alignItems: "center",
       }}
@@ -115,33 +109,37 @@ const TaskForm = ({ onTaskSubmitted, selectedTask, tasks }) => {
             })}
         </select>
       </div>
-      <button onClick={() => handleClearForm()} type="button">
-        Clear Form
-      </button>
-      <button
-        onClick={() => {
-          handleClearForm();
-          onTaskSubmitted(tempTask);
-        }}
-        type="button"
-      >
-        {selectedTask ? "Update" : "Create"} Task
-      </button>
-      <button
-        onClick={() =>
-          onTaskSubmitted({
-            id: "Task RANDOM",
-            name: "RANDOM TASK",
-            start: "2023-06-13",
-            end: "2023-06-31",
-            progress: 67,
-            dependencies: "Task 3",
-          })
-        }
-        type="button"
-      >
-        Create Random Task
-      </button>
+      <div>
+        <button
+          onClick={() => {
+            handleClearForm();
+            onTaskSubmitted({ ...tempTask });
+          }}
+          type="button"
+        >
+          {selectedTask ? "Update" : "Create"} Task
+        </button>
+        <button onClick={() => handleClearForm()} type="button">
+          Clear Form
+        </button>
+      </div>
+      <div>
+        <button
+          onClick={() =>
+            onTaskSubmitted({
+              id: "Task RANDOM",
+              name: "RANDOM TASK",
+              start: "2023-06-13",
+              end: "2023-06-31",
+              progress: 67,
+              dependencies: "Task 3",
+            })
+          }
+          type="button"
+        >
+          Create Random Task
+        </button>
+      </div>
     </form>
   );
 };

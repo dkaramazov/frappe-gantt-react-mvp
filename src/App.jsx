@@ -28,7 +28,7 @@ const taskList = [
     name: "Create About Page",
     start: "2023-07-12",
     end: "2023-07-16",
-    progress: 0,
+    progress: 15,
     dependencies: "Task 2, Task 1",
   },
 ];
@@ -53,16 +53,15 @@ function App() {
         ...found,
         ...newTask,
       };
+      // setTasks([...tasks]);
       const other = tasks.filter((t) => t.id !== found.id);
       setTasks([...other, found].sort((a, b) => a._index - b._index));
-      console.log("updated task", newTask);
     } else {
       setTasks([...tasks, newTask]);
-      console.log("added task");
     }
   }
 
-  function onModeChanged(updatedMode) {
+  function handleModeChanged(updatedMode) {
     setMode(updatedMode);
   }
 
@@ -79,23 +78,25 @@ function App() {
     const task = tasks.find((t) => updatedTask.id === t.id);
     task.start = new moment(start).format("YYYY-MM-DD");
     task.end = new moment(end).format("YYYY-MM-DD");
+    setTasks([...tasks]);
   }
 
   function handleUpdateProgress(updatedTask, progress) {
     const task = tasks.find((t) => t.id === updatedTask.id);
     task.progress = progress;
+    setTasks([...tasks]);
   }
 
-  function handleUpdateTasks(tasks) {
-    setTasks([...tasks]);
-    console.log("tasks updated", tasks);
+  function handleUpdateTasks(updatedTasks) {
+    console.log("tasks updated");
+    console.table(updatedTasks);
   }
 
   return (
     <>
       <div style={{ display: "flex" }}>
         <FrappeGanttControls
-          onModeChanged={onModeChanged}
+          onModeChanged={handleModeChanged}
           defaultMode={ViewMode.Day}
           ViewMode={ViewMode}
         />
@@ -112,7 +113,7 @@ function App() {
         <FrappeGantt
           tasks={tasks}
           viewMode={ViewMode[mode]}
-          onClick={(task) => handleTaskClicked(task)}
+          onClick={handleTaskClicked}
           onDateChange={(task, start, end) =>
             handleUpdateDate(task, start, end)
           }

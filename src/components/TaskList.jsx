@@ -1,6 +1,13 @@
 import moment from "moment";
+import { useEffect, useState } from "react";
 
 const TaskList = ({ tasks, onDeleteTask }) => {
+  const [list, setList] = useState([]);
+
+  useEffect(() => {
+    setList(tasks);
+  }, [tasks]);
+
   return (
     <table
       style={{
@@ -23,7 +30,7 @@ const TaskList = ({ tasks, onDeleteTask }) => {
         </tr>
       </thead>
       <tbody>
-        {tasks.map((t) => (
+        {list.map((t) => (
           <tr key={t.id}>
             <td>{t.id}</td>
             <td>{t.name}</td>
@@ -35,7 +42,7 @@ const TaskList = ({ tasks, onDeleteTask }) => {
             <td>{t._index}</td>
             <td>
               <button onClick={() => onDeleteTask(t.id)} type="button">
-                Delete
+                &#10005;
               </button>
             </td>
           </tr>
