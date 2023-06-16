@@ -2,7 +2,14 @@ import moment from "moment";
 
 const TaskList = ({ tasks, onDeleteTask }) => {
   return (
-    <table style={{ width: "100%" }}>
+    <table
+      style={{
+        width: "100%",
+        border: "3px solid gray",
+        margin: "10px 0",
+        padding: "10px 0",
+      }}
+    >
       <thead style={{ color: "green" }}>
         <tr>
           <th>ID</th>
